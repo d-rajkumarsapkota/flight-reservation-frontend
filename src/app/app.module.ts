@@ -1,18 +1,36 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
+
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { FlightService } from './services/flight-endpoints.service';
+import { InHourMinPipe } from './pipes/in-hour-min.pipe';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InHourMinPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
+    FormsModule    
   ],
-  providers: [],
+  providers: [
+    FlightService    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

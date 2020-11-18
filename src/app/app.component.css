@@ -1,0 +1,48 @@
+.nav {
+    border-bottom: 2px solid gray;
+}
+
+.nav-active {
+    border-bottom: 3px solid blue;
+}
+
+.fd-1  {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+}
+
+ .fd-2  {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background: #fff;
+    padding: 10px;
+    margin-left: 3px;
+}
+
+.flight-details {
+    margin-bottom: 8px;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+.panel-title {
+    position: relative;
+}
+
+.panel-title::after {
+    content: "\f107";
+    color: #333;
+    top: -2px;
+    right: 0px;
+    position: absolute;
+    font-family: "FontAwesome"
+}
+
+.panel-title[aria-expanded="true"]::after {
+    content: "\f106";
+}
+
