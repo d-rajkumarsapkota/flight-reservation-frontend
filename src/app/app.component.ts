@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   fromLocation: string;
   disableMore: boolean;
   loading = false;
+  isSameToFromCity = false;
 
   // Show more results variables
   resultsCount: number;
@@ -84,13 +85,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   submitBooking(): void {
 
-    this.isFormSubmitted = true;
+    this.isSameToFromCity = false; 
+    this.isFormSubmitted = true;    
+    
     if (this.bookingForm.invalid) return;
+
+    this.toLocation = this.bookingForm.value.depature;
+    this.fromLocation = this.bookingForm.value.arrival;
+
+    if(this.toLocation != '' && this.fromLocation != '' && this.toLocation.toUpperCase() == this.fromLocation.toUpperCase()) {
+      this.isSameToFromCity = true;
+      return;
+    }
 
     this.FlightRangeData = [];
     this.loading = true;
-    this.toLocation = this.bookingForm.value.depature;
-    this.fromLocation = this.bookingForm.value.arrival;
+    
 
     this.subscription = this.flightService.getFlightDetails()
       .subscribe(

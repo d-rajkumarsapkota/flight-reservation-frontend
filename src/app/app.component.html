@@ -16,7 +16,12 @@
 
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-      <form [formGroup]="bookingForm">
+      <form [formGroup]="bookingForm" (ngSubmit)="submitBooking()">
+        <div class="container" *ngIf="isSameToFromCity">
+          <div class="alert alert-danger" role="alert">
+            Searching from and to the same city is not possible.
+          </div>
+        </div>
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="bookingFrom">From</label>
@@ -58,7 +63,7 @@
         </div>
 
         <div class="form-group">
-          <button type="button" class="btn btn-success" (click)="submitBooking()">Search flights</button>
+          <button type="submit" class="btn btn-success">Search flights</button>
         </div>
       </form>
     </div>
