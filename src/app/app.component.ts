@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FlightService } from './services/flight-endpoints.service';
 import { Flight } from './models/flights.model';
@@ -25,7 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
   fromLocation: string;
   disableMore: boolean;
   loading = false;
-  isSameToFromCity = false;
 
   // Show more results variables
   resultsCount: number;
@@ -63,8 +62,16 @@ export class AppComponent implements OnInit, OnDestroy {
       ],
       departDate: [this.bsValue],
       arrivalDate: [this.bsValue]
-    });
+    },
+    { validators: this.depatureArrivalValidator });
 
+  }
+
+  // Custom validator to check if depature and arrival is not the same
+  depatureArrivalValidator(formGroup : FormGroup): ValidationErrors | null {
+    const to = formGroup.get('depature');
+    const from = formGroup.get('arrival');
+    return (to.value.length > 0 && from.value.length > 0 && to.value == from.value) ? {'isSameToFromCity' : true} : null;
   }
 
   // Getter to get the form control in html
@@ -85,18 +92,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   submitBooking(): void {
 
-    this.isSameToFromCity = false; 
     this.isFormSubmitted = true;    
     
     if (this.bookingForm.invalid) return;
 
     this.toLocation = this.bookingForm.value.depature;
     this.fromLocation = this.bookingForm.value.arrival;
-
-    if(this.toLocation != '' && this.fromLocation != '' && this.toLocation.toUpperCase() == this.fromLocation.toUpperCase()) {
-      this.isSameToFromCity = true;
-      return;
-    }
 
     this.FlightRangeData = [];
     this.loading = true;
